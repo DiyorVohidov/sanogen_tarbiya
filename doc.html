@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <!-- Sarlavha / Logo -->
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">🎺</span>
+                <h1 class="text-2xl font-bold text-indigo-600">Cholg'u Asboblari Studiyasi</h1>
+            </div>
+
+            <!-- ⬅️ ORQAGA QAYTISH TUGMASINI SHU YERGA QO'YASIZ 👇 -->
+            <div>
+                <a href="index.html" style="
+                    background-color: #6366f1; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border-radius: 20px; 
+                    text-decoration: none; 
+                    font-weight: bold;
+                    display: inline-block;">
+                    ⬅️ Asosiy Sahifaga Qaytish
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cholg'u Asboblari Studiyasi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0fdf4;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 { color: #4f46e5; margin-bottom: 5px; }
+        p { color: #64748b; font-size: 14px; }
+        
+        .enable-sound-btn {
+            background-color: #22c55e;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+        .enable-sound-btn:hover { background-color: #16a34a; }
+
+        .inst-select { margin: 20px 0; }
+        .inst-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px;
+            border: 2px solid #6366f1;
+            border-radius: 12px;
+            background: white;
+            color: #4f46e5;
+            cursor: pointer;
+        }
+        .inst-btn.active {
+            background: #6366f1;
+            color: white;
+        }
+        .board {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .note-btn {
+            width: 70px;
+            height: 90px;
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+            transition: 0.1s;
+        }
+        .note-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        }
+        .red { background: #ef4444; }
+        .orange { background: #f97316; }
+        .yellow { background: #eab308; }
+        .green { background: #22c55e; }
+        .teal { background: #14b8a6; }
+        .blue { background: #3b82f6; }
+        .indigo { background: #6366f1; }
+        .purple { background: #a855f7; }
+    </style>
+</head>
+<body>
+
+    <h1>🎺 Musiqiy Cholg'u Asboblari</h1>
+    <p>Ovozni faollashtirish uchun pastdagi tugmani bosing:</p>
+
+    <!-- Кнопка активации звука -->
+    <button class="enable-sound-btn" onclick="initAudio(this)">🔊 Ovozni Yoqish (Bosing)</button>
+
+    <!-- Выбор инструмента -->
+    <div class="inst-select">
+        <button class="inst-btn active" onclick="selectInst('piano', this)">🎹 Pianino</button>
+        <button class="inst-btn" onclick="selectInst('guitar', this)">🎸 Gitara</button>
+        <button class="inst-btn" onclick="selectInst('drums', this)">🥁 Baraban</button>
+        <button class="inst-btn" onclick="selectInst('flute', this)">🪈 Nay</button>
+    </div>
+
+    <!-- Панель кнопок -->
+    <div class="board" id="notes-board"></div>
+
+    <script>
+        let audioCtx = null;
+
+        function initAudio(btn) {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            btn.innerText = "✅ Ovoz Yoqildi!";
+            btn.style.backgroundColor = "#6366f1";
+            
+            // Пробный короткий звук при нажатии
+            playSound(440, 'sine');
+        }
+
+        function playSound(freq, type = 'sine') {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        }
+
+        const data = {
+            piano: [
+                { name: 'Do', freq: 261.63, color: 'red', type: 'triangle' },
+                { name: 'Re', freq: 293.66, color: 'orange', type: 'triangle' },
+                { name: 'Mi', freq: 329.63, color: 'yellow', type: 'triangle' },
+                { name: 'Fa', freq: 349.23, color: 'green', type: 'triangle' },
+                { name: 'Sol', freq: 392.00, color: 'teal', type: 'triangle' },
+                { name: 'La', freq: 440.00, color: 'blue', type: 'triangle' },
+                { name: 'Si', freq: 493.88, color: 'indigo', type: 'triangle' },
+                { name: 'Do2', freq: 523.25, color: 'purple', type: 'triangle' }
+            ],
+            guitar: [
+                { name: 'Tor 1', freq: 329.63, color: 'orange', type: 'sawtooth' },
+                { name: 'Tor 2', freq: 246.94, color: 'yellow', type: 'sawtooth' },
+                { name: 'Tor 3', freq: 196.00, color: 'green', type: 'sawtooth' },
+                { name: 'Tor 4', freq: 146.83, color: 'blue', type: 'sawtooth' }
+            ],
+            drums: [
+                { name: 'Bass', freq: 80, color: 'red', type: 'square' },
+                { name: 'Snare', freq: 200, color: 'purple', type: 'square' },
+                { name: 'HiHat', freq: 700, color: 'yellow', type: 'square' }
+            ],
+            flute: [
+                { name: 'Parda 1', freq: 440, color: 'teal', type: 'sine' },
+                { name: 'Parda 2', freq: 493.88, color: 'blue', type: 'sine' },
+                { name: "Parda 3", freq: 554.37, color: 'indigo', type: 'sine' }
+            ]
+        };
+
+        function selectInst(inst, btn) {
+            document.querySelectorAll('.inst-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const board = document.getElementById('notes-board');
+            board.innerHTML = '';
+
+            data[inst].forEach(item => {
+                const noteBtn = document.createElement('button');
+                noteBtn.className = `note-btn ${item.color}`;
+                noteBtn.innerText = item.name;
+                noteBtn.onclick = () => playSound(item.freq, item.type);
+                board.appendChild(noteBtn);
+            });
+        }
+
+        selectInst('piano', document.querySelector('.inst-btn'));
+    </script>
+</body>
+</html>

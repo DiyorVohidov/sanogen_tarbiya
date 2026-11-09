@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Murojaat va Takliflar - Sanogen Tarbiya</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 40px; }
+        .contact-box { background: white; padding: 30px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #4CAF50; color: white; padding: 10px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background: #45a049; }
+        
+        /* Orqaga qaytish tugmasi uchun dizayn */
+        .back-btn { 
+            display: inline-block; 
+            background: #6c5ce7; 
+            color: white; 
+            padding: 8px 14px; 
+            border-radius: 4px; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+        }
+        .back-btn:hover { background: #5b47d6; }
+
+        #statusMsg { text-align: center; margin-top: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="contact-box">
+        <!-- ORQAGA QAYTISH TUGMASI SHU YERGA QO'YILDI 👇 -->
+        <a href="index.html" class="back-btn">← Asosiy Sahifaga Qaytish</a>
+
+        <h3>Murojaat va Takliflar</h3>
+        <form id="telegramForm" onsubmit="sendToTelegram(event)">
+            <input type="text" id="name" placeholder="Ism va familiyangiz..." required>
+            <input type="email" id="email" placeholder="Elektron pochtangiz..." required>
+            <textarea id="message" rows="4" placeholder="Taklif yoki shikoyatingizni yozing..." required></textarea>
+            <button type="submit">Yuborish</button>
+        </form>
+        <p id="statusMsg"></p>
+    </div>
+
+    <script>
+        function sendToTelegram(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const statusMsg = document.getElementById('statusMsg');
+
+            // Sizning ma'lumotlaringiz:
+            const botToken = "8988452601:AAEm3ro5BrbWU5YaMggcboYaoh8MPsQ7PoQ"; 
+            const chatId = "2023262523"; 
+
+            const text = `📬 Platformadan yangi murojaat!\n\n👤 Ism: ${name}\n📧 E-mail: ${email}\n💬 Xabar: ${message}`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}`;
+
+            statusMsg.style.color = "orange";
+            statusMsg.innerText = "Yuborilmoqda...";
+
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        statusMsg.style.color = "green";
+                        statusMsg.innerText = "Murojaatingiz muvaffaqiyatli yuborildi!";
+                        document.getElementById('telegramForm').reset();
+                    } else {
+                        statusMsg.style.color = "red";
+                        statusMsg.innerText = "Xatolik yuz berdi. Qaytadan urinib ko'ring.";
+                    }
+                })
+                .catch(error => {
+                    statusMsg.style.color = "red";
+                    statusMsg.innerText = "Internet aloqasida xatolik!";
+                    console.error("Xato:", error);
+                });
+        }
+    </script>
+
+</body>
+</html>

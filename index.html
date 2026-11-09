@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="uz" class="h-full">
+<head>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zukko So'z - Bolalar Musiqa va Qo'shiqlar Platformasi (1-4 sinf)</title>
+   
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts for Kid-friendly Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['Fredoka', 'sans-serif'],
+            quicksand: ['Quicksand', 'sans-serif']
+          },
+          colors: {
+            vatan: { light: '#FFE4E6', DEFAULT: '#F43F5E', dark: '#E11D48' },
+            ona: { light: '#FCE7F3', DEFAULT: '#EC4899', dark: '#DB2777' },
+            tabiat: { light: '#DCFCE7', DEFAULT: '#22C55E', dark: '#16A34A' },
+            maktab: { light: '#E0F2FE', DEFAULT: '#0284C7', dark: '#0369A1' },
+            ertak: { light: '#FEF3C7', DEFAULT: '#F59E0B', dark: '#D97706' }
+          },
+          keyframes: {
+            bounceSlow: {
+              '0%, 100%': { transform: 'translateY(-4%)' },
+              '50%': { transform: 'translateY(0)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+              '50%': { transform: 'scale(1.05)', opacity: '0.85' },
+            }
+          },
+          animation: {
+            'bounce-slow': 'bounceSlow 3s infinite ease-in-out',
+            'pulse-glow': 'pulseGlow 2s infinite ease-in-out',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #f3f8ff 0%, #e5f0ff 100%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Floating musical notes background effect */
+    .note-bg {
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0.15;
+      animation: floatNotes 12s infinite linear;
+    }
+
+    @keyframes floatNotes {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      50% { opacity: 0.2; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    .karaoke-active {
+      color: #f59e0b;
+      font-weight: 800;
+      transform: scale(1.08);
+      transition: all 0.2s ease;
+      text-shadow: 0px 2px 10px rgba(245, 158, 11, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col text-slate-800 bg-amber-50/20 relative overflow-x-hidden">
+<header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <span class="text-3xl">🎵</span>
+                <h1 class="text-2xl font-bold text-indigo-600">Sanogen tarbiya</h1>
+            </div>
+
+            <!-- TUGMANI SHU YERGA QO'YASIZ 👇 -->
+            <div>
+                <a href="doc.html" style="
+                    background-color: #10b981; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border-radius: 20px; 
+                    text-decoration: none; 
+                    font-weight: bold;
+                    display: inline-block;">
+                    🎺 Cholg'u Asboblari
+                </a>
+<!-- 2. SHU YERGA VIKTORINA TUGMASINI JOYLASHTIRASIZ 👇 -->
+                <a href="viktorina.html" style="
+                    background-color: #a855f7; 
+                    color: white; 
+                    padding: 10px 20px; 
+                    border-radius: 20px; 
+                    text-decoration: none; 
+                    font-weight: bold;
+                    display: inline-block;">
+                    🧠 Musiqiy Viktorina
+                </a>
+		<a href="notlar.html" style="
+                    background-color: #3b82f6;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    display: inline-block;">
+                    🎵 Notlar
+                </a>
+
+            <!-- 2. Qo'shiqlar tugmasi -->
+                <a href="qoshiq.html" style="
+                    background-color: #ec4899;
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    display: inline-block;">
+                    🎤 Qo'shiqlar
+                </a>
+
+            <!-- 3. Nazorat Testi tugmasi -->
+               <a href="nazortest.html" style="
+                   background-color: #f97316;
+                   color: white;
+                   padding: 10px 20px;
+                   border-radius: 20px;
+                   text-decoration: none;
+                   font-weight: bold;
+                   display: inline-block;">
+                   📝 Nazorat Testi
+               </a>
+            </div>
+            </div>
+
+        </div>
+    </header>
+  <!-- Background Music Notes Animation -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <i class="fa-solid fa-music note-bg text-4xl text-rose-400" style="left: 10%; animation-delay: 0s;"></i>
+    <i class="fa-solid fa-music note-bg text-5xl text-blue-400" style="left: 25%; animation-delay: 3s;"></i>
+    <i class="fa-solid fa-note-sticky note-bg text-3xl text-emerald-400" style="left: 55%; animation-delay: 6s;"></i>
+    <i class="fa-solid fa-guitar note-bg text-6xl text-amber-400" style="left: 80%; animation-delay: 2s;"></i>
+    <i class="fa-solid fa-music note-bg text-4xl text-purple-400" style="left: 90%; animation-delay: 8s;"></i>
+  </div>
+
+  <!-- Header Banner & Navigation -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md shadow-md border-b-4 border-amber-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="filterCategory('all')">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-tr from-amber-400 to-rose-400 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg transform rotate-3 hover:rotate-0 transition">
+            <i class="fa-solid fa-compact-disc animate-spin-slow"></i>
+          </div>
+          <div>
+            <h1 class="font-fredoka text-2xl sm:text-3xl text-rose-500 tracking-wide font-bold flex items-center gap-2">
+              Sanogen tarbiya <span class="text-xs bg-amber-300 text-amber-900 px-2 py-0.5 rounded-full font-sans">1-4 Sinf</span>
+            </h1>
+            <p class="text-xs text-slate-500 font-semibold">Bolalar Musiqa va Qo'shiqlar Portali</p>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-md my-1 sm:my-0">
+          <div class="relative">
+            <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Qo'shiq yoki kuy izlang..." 
+                   class="w-full pl-11 pr-4 py-2.5 rounded-full bg-slate-100 border-2 border-slate-200 focus:border-amber-400 focus:bg-white focus:outline-none font-semibold text-slate-700 transition placeholder-slate-400 text-sm">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+          </div>
+        </div>
+
+        <!-- Top Right Actions -->
+        <div class="flex items-center gap-3">
+          <button onclick="toggleFavoritesOnly()" id="favToggleBtn" class="flex items-center gap-2 px-4 py-2 rounded-full bg-rose-50 text-rose-600 font-bold hover:bg-rose-100 transition border border-rose-200 text-sm">
+            <i class="fa-solid fa-heart text-rose-500"></i>
+            <span class="hidden sm:inline">Saralanganlar</span>
+            <span id="favCount" class="bg-rose-500 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+          </button>
+          
+          <button onclick="openPianoModal()" class="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold transition shadow-md hover:shadow-lg text-sm">
+            <i class="fa-solid fa-keyboard"></i>
+            <span class="hidden md:inline">Kichik Pianino</span>
+          </button>
+        </div>
+        <a href="sharh.html" class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-bold transition shadow-md text-xs">
+            <i class="fa-solid fa-comments"></i>
+            <span>Izoh va Sharhlar</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category Navigation Tabs -->
+  <nav class="bg-gradient-to-r from-amber-100 via-rose-100 to-sky-100 py-3 border-b border-amber-200/60 sticky top-[73px] z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1 no-scrollbar text-sm sm:text-base" id="categoryTabs">
+        <!-- Tab items injected via JS -->
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 z-10">
+    
+    <!-- Hero Banner / Quiz Prompt -->
+    <div class="mb-8 bg-gradient-to-r from-rose-500 via-purple-500 to-indigo-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="relative z-10 max-w-xl text-center md:text-left">
+        <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block backdrop-blur-sm">Quvnoq Darslar va Kuy Baza</span>
+        <h2 class="font-fredoka text-2xl sm:text-4xl font-bold mb-3 leading-tight">Musiqa bilan O'rganamiz va Kuylaymiz! 🎵</h2>
+        <p class="text-rose-100 text-sm sm:text-base font-medium mb-4">Vatanimiz, Onajonimiz hamda maktab hayotiga bag'ishlangan eng sara bolalar qo'shiqlari va karakoe matnlari.</p>
+        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+          <button onclick="playRandomSong()" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-extrabold px-5 py-2.5 rounded-full shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2">
+            <i class="fa-solid fa-shuffle"></i> Tasodifiy Qo'shiq
+          </button>
+          <button onclick="openQuizModal()" class="bg-white/20 hover:bg-white/30 text-white font-bold px-5 py-2.5 rounded-full border border-white/40 transition backdrop-blur-sm flex items-center gap-2">
+            <i class="fa-solid fa-gamepad"></i> Musiqiy Topishmoq
+          </button>
+        </div>
+      </div>
+
+      <div class="relative z-10 w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0 flex items-center justify-center bg-white/10 rounded-full backdrop-blur-md border-4 border-white/20 shadow-inner animate-bounce-slow">
+        <i class="fa-solid fa-music text-7xl text-amber-300 drop-shadow-md"></i>
+      </div>
+
+      <!-- Decorative circles -->
+      <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+      <div class="absolute -left-10 -top-10 w-40 h-40 bg-rose-400/20 rounded-full blur-lg pointer-events-none"></div>
+    </div>
+
+    <!-- Active Category Header & Filter Info -->
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <div id="categoryIcon" class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center text-xl font-bold shadow">
+          <i class="fa-solid fa-shapes"></i>
+        </div>
+        <div>
+          <h3 id="categoryTitle" class="font-fredoka text-2xl font-bold text-slate-800">Barcha Qo'shiqlar</h3>
+          <p id="categoryDesc" class="text-xs text-slate-500">1-4 sinf o'quvchilari uchun maxsus tanlangan to'plam</p>
+        </div>
+      </div>
+
+      <!-- Sort Options -->
+      <div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl shadow-sm border border-slate-200 text-xs font-bold text-slate-600">
+        <label for="sortBy"><i class="fa-solid fa-arrow-down-a-z text-amber-500 mr-1"></i> Saralash:</label>
+        <select id="sortBy" onchange="renderSongs()" class="bg-transparent font-semibold outline-none text-slate-700 cursor-pointer">
+          <option value="default">Odatiy tartib</option>
+          <option value="title">Nomi bo'yicha (A-Z)</option>
+          <option value="grade">Sinf bo'yicha</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Song Cards Grid -->
+    <div id="songsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Songs dynamically rendered here -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border-2 border-dashed border-slate-200">
+      <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+        <i class="fa-solid fa-compact-disc"></i>
+      </div>
+      <h4 class="font-fredoka text-xl font-bold text-slate-700 mb-1">Hech narsa topilmadi</h4>
+      <p class="text-slate-500 text-sm max-w-md mx-auto mb-4">Kiritilgan kalit so'z bo'yicha qo'shiqlar topilmadi. Boshqa so'z bilan izlab ko'ring!</p>
+      <button onclick="resetFilters()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold px-4 py-2 rounded-xl text-sm transition">
+        Filtrni tozalash
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Sticky Bottom Player Bar (When audio is active) -->
+  <div id="bottomPlayerBar" class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t-2 border-amber-300 shadow-2xl p-3 z-40 transform translate-y-full transition-transform duration-300">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      
+      <!-- Current Playing Info -->
+      <div class="flex items-center gap-3 w-1/3 min-w-[200px]">
+        <img id="playerThumb" src="" alt="Thumbnail" class="w-12 h-12 rounded-xl object-cover shadow border-2 border-amber-300">
+        <div class="truncate">
+          <h4 id="playerTitle" class="font-fredoka text-sm font-bold text-slate-800 truncate">Qo'shiq Nomi</h4>
+          <span id="playerCategory" class="inline-block text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800">Bo'lim</span>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex flex-col items-center w-1/3 max-w-md">
+        <div class="flex items-center gap-4 mb-1">
+          <button onclick="playPrevSong()" class="text-slate-500 hover:text-rose-500 transition text-lg"><i class="fa-solid fa-backward-step"></i></button>
+          <button id="mainPlayBtn" onclick="togglePlayPause()" class="w-10 h-10 bg-rose-500 hover:bg-rose-600 text-white rounded-full flex items-center justify-center text-lg shadow-md transition transform hover:scale-105">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button onclick="playNextSong()" class="text-slate-500 hover:text-rose-500 transition text-lg"><i class="fa-solid fa-forward-step"></i></button>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="w-full flex items-center gap-2 text-xs font-semibold text-slate-400">
+          <span id="currentTimeDisplay">0:00</span>
+          <input type="range" id="progressBar" value="0" min="0" max="100" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-rose-500" oninput="seekAudio(this.value)">
+          <span id="totalTimeDisplay">0:00</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3 w-1/3 justify-end">
+        <button onclick="openKaraokeModal()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1.5 shadow transition">
+          <i class="fa-solid fa-microphone"></i>
+          <span class="hidden md:inline">Karaoke & Matn</span>
+        </button>
+        <button onclick="closeBottomPlayer()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal 1: Dedicated Karaoke / Full Player Modal -->
+  <div id="karaokeModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden relative border-4 border-amber-300">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-rose-500 via-amber-500 to-emerald-500 p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-microphone-lines text-2xl"></i>
+          <h3 class="font-fredoka text-xl font-bold">Karaoke va Qo'shiq Matni</h3>
+        </div>
+        <button onclick="closeKaraokeModal()" class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white font-bold transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto flex-1 flex flex-col md:flex-row gap-6 items-center">
+        
+        <!-- Left: Image & Info -->
+        <div class="w-full md:w-1/2 flex flex-col items-center text-center">
+          <img id="modalSongThumb" src="" alt="Song image" class="w-48 h-48 sm:w-56 sm:h-56 rounded-3xl object-cover shadow-xl border-4 border-amber-200 mb-4 transform hover:scale-105 transition duration-300">
+          <h3 id="modalSongTitle" class="font-fredoka text-2xl font-bold text-slate-800 mb-1">Qo'shiq Nomi</h3>
+          <p id="modalSongAuthor" class="text-slate-500 font-medium text-sm mb-3">Muallif / Bastakor</p>
+          <div class="flex items-center gap-2 mb-4">
+            <span id="modalSongGrade" class="bg-rose-100 text-rose-700 font-bold text-xs px-3 py-1 rounded-full">3-Sinf</span>
+            <span id="modalSongCat" class="bg-sky-100 text-sky-700 font-bold text-xs px-3 py-1 rounded-full">Vatan</span>
+          </div>
+
+          <!-- Synthetic Melodic Player Control -->
+          <div class="bg-slate-50 p-4 rounded-2xl w-full border border-slate-200">
+            <div class="flex items-center justify-center gap-4 mb-2">
+              <button onclick="togglePlayPause()" id="modalPlayBtn" class="w-12 h-12 bg-rose-500 hover:bg-rose-600 text-white rounded-full flex items-center justify-center text-xl shadow-lg transition">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="text-[11px] text-slate-400 font-semibold">Sintizator orqali kuylanadigan jonli kuy</p>
+          </div>
+        </div>
+
+        <!-- Right: Karaoke Synchronized Lyrics -->
+        <div class="w-full md:w-1/2 bg-amber-50/60 rounded-2xl p-5 border-2 border-amber-200/80 h-72 flex flex-col">
+          <h4 class="font-fredoka text-amber-800 text-sm font-bold uppercase tracking-wider mb-3 flex items-center gap-2 border-b border-amber-200 pb-2">
+            <i class="fa-solid fa-music"></i> Qo'shiq Matni (Birlashib Ayting)
+          </h4>
+          <div id="lyricsContainer" class="flex-1 overflow-y-auto space-y-3 pr-2 text-center text-slate-600 font-semibold text-base sm:text-lg leading-relaxed">
+            <!-- Dynamic lyrics injected -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="bg-slate-50 px-6 py-3 border-t border-slate-200 flex justify-between items-center text-xs text-slate-500 font-bold">
+        <span><i class="fa-solid fa-graduation-cap text-amber-500"></i> Boshlang'ich sinflar uchun</span>
+        <button onclick="closeKaraokeModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl transition">Yopish</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal 2: Virtual Kids Piano -->
+  <div id="pianoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl relative border-4 border-emerald-400">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-fredoka text-2xl font-bold text-emerald-600 flex items-center gap-2">
+            <i class="fa-solid fa-keyboard"></i> Kichik Musiqachi Pianinosi
+          </h3>
+          <p class="text-xs text-slate-500 font-medium">Tugmalarni bosing yoki klaviatura orqali o'ynang (A, S, D, F, G, H, J)</p>
+        </div>
+        <button onclick="closePianoModal()" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-600 font-bold">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Piano Keys Container -->
+      <div class="bg-slate-800 p-4 rounded-2xl shadow-inner flex justify-center items-start gap-1 relative overflow-x-auto my-4 select-none">
+        
+        <!-- White Keys -->
+        <button onclick="playNote(261.63)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">C</button>
+        <button onclick="playNote(293.66)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">D</button>
+        <button onclick="playNote(329.63)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">E</button>
+        <button onclick="playNote(349.23)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">F</button>
+        <button onclick="playNote(392.00)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">G</button>
+        <button onclick="playNote(440.00)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">A</button>
+        <button onclick="playNote(493.88)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">B</button>
+        <button onclick="playNote(523.25)" class="w-12 h-44 bg-white hover:bg-amber-100 rounded-b-lg shadow text-slate-800 font-bold pb-2 flex items-end justify-center active:bg-amber-300 transition">C2</button>
+      </div>
+
+      <div class="text-center text-xs text-slate-400 font-semibold">
+        Oddiy notalardan foydalanib o'zingizning kuyingizni yarating! 🎶
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Music Quiz Game -->
+  <div id="quizModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative border-4 border-purple-400 text-center">
+      <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3">
+        <i class="fa-solid fa-circle-question"></i>
+      </div>
+      <h3 class="font-fredoka text-2xl font-bold text-slate-800 mb-1">Musiqiy Topishmoq</h3>
+      <p class="text-xs text-slate-500 font-medium mb-6">Musiqa va taronalar haqida bilimlaringizni sinab ko'ring!</p>
+
+      <div id="quizContent" class="text-left bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-6">
+        <p id="quizQuestion" class="font-bold text-slate-800 text-base mb-4">Savol bu yerda ko'rinadi...</p>
+        <div id="quizAnswers" class="space-y-2">
+          <!-- Quiz buttons injected dynamically -->
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <span id="quizScore" class="font-bold text-xs text-purple-600">Ball: 0</span>
+        <button onclick="closeQuizModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-sm transition">
+          Chiqish
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-8 mt-12 z-10 relative">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <div class="flex items-center justify-center gap-2 mb-3">
+        <div class="w-8 h-8 bg-rose-500 text-white rounded-xl flex items-center justify-center font-bold">
+          <i class="fa-solid fa-music"></i>
+        </div>
+        <span class="font-fredoka text-xl font-bold text-slate-800">Sanogen tarbiya</span>
+      </div>
+      <p class="text-xs text-slate-500 font-medium max-w-md mx-auto mb-4">
+        1, 2, 3 va 4-sinf boshlang'ich maktab o'quvchilari uchun mo'ljallangan estetik va musiqiy tarbiya platformasi Marifat Umbarova tomonidan yaratildi.
+      </p>
+      <div class="flex justify-center gap-4 text-xs font-bold text-slate-600 mb-4">
+        <span class="hover:text-rose-500 cursor-pointer">🇺🇿 Vatan</span> • 
+        <span class="hover:text-rose-500 cursor-pointer">❤️ Ona va Oila</span> • 
+        <span class="hover:text-rose-500 cursor-pointer">🍂 Tabiat</span> • 
+        <span class="hover:text-rose-500 cursor-pointer">🔔 Maktab</span>
+      </div>
+      <p class="text-[11px] text-slate-400">© 2026 San. Barcha huquqlar himoyalangan.</p>
+    </div>
+  </footer>
+
+  <!-- DATA & APPLICATION LOGIC -->
+  <script>
+    // -------------------------------------------------------------
+    // DATA STRUCTURE: Categories & Songs
+    // -------------------------------------------------------------
+    const categories = [
+      { id: 'all', title: 'Barchasi', icon: 'fa-border-all', color: 'bg-slate-800', lightColor: 'bg-slate-100', desc: 'Barcha to\'plamdagi musiqalar' },
+      { id: 'vatan', title: 'Vatan', icon: 'fa-flag', color: 'bg-rose-500', lightColor: 'bg-rose-50', desc: 'Vatan va g\'urur haqidagi qo\'shiqlar' },
+      { id: 'ona', title: 'Ona va Oila', icon: 'fa-heart', color: 'bg-pink-500', lightColor: 'bg-pink-50', desc: 'Ota-ona va mehribon oila haqida' },
+      { id: 'tabiat', title: 'Tabiat va Fasllar', icon: 'fa-leaf', color: 'bg-emerald-500', lightColor: 'bg-emerald-50', desc: 'Bahor, tabiat va jonivorlar kuylari' },
+      { id: 'maktab', title: 'Maktab va Do\'stlik', icon: 'fa-bell', color: 'bg-sky-500', lightColor: 'bg-sky-50', desc: 'Sinfdoshlar, bilim va ustozlar haqida' },
+      { id: 'ertak', title: 'Ertak va Xalq Kuylari', icon: 'fa-book-open', color: 'bg-amber-500', lightColor: 'bg-amber-50', desc: 'Milliy va quvnoq bolalar taronalari' }
+    ];
+
+    const songs = [
+      {
+        id: 1,
+        title: "O'zbekiston - Jon Vatanim",
+        category: "vatan",
+        grade: "1-4 Sinf",
+        author: "P. Mo'min she'ri",
+        image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80",
+        notes: [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 392.00], // Melody notes
+        lyrics: [
+          "O'zbekiston - jon Vatanim,",
+          "Bag'ring kengdir, bog'im Vatan.",
+          "Senga baxshida yosh jonim,",
+          "Kuying kuylar har bir dilim!"
+        ]
+      },
+      {
+        id: 2,
+        title: "Onajonim - Mehribonim",
+        category: "ona",
+        grade: "1-2 Sinf",
+        author: "A. Obidjon she'ri",
+        image: "https://images.unsplash.com/photo-1536640712247-c45474d31d94?auto=format&fit=crop&w=600&q=80",
+        notes: [329.63, 349.23, 392.00, 329.63, 293.66, 261.63],
+        lyrics: [
+          "Ertalab tursam kulib,",
+          "Silar mening boshimni.",
+          "Ona haqida qo'shiqlarim,",
+          "Yoritadi yo'limni!"
+        ]
+      },
+      {
+        id: 3,
+        title: "Bahor Keldi, Gul Bahor",
+        category: "tabiat",
+        grade: "2-3 Sinf",
+        author: "Xalq kuylari",
+        image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=600&q=80",
+        notes: [392.00, 440.00, 493.88, 523.25, 440.00, 392.00],
+        lyrics: [
+          "Bahor keldi quvonch bilan,",
+          "Qushlar sayrar shoxlarda.",
+          "Gullar ochildi qirda,",
+          "Tabassum har qarashda!"
+        ]
+      },
+      {
+        id: 4,
+        title: "Zanglaydi Birinchi Qo'ng'iroq",
+        category: "maktab",
+        grade: "1 Sinf",
+        author: "M. Nurin",
+        image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80",
+        notes: [261.63, 329.63, 392.00, 523.25, 392.00, 329.63],
+        lyrics: [
+          "Jiringladi qo'ng'iroq,",
+          "Chaqirdi bizni darsga.",
+          "Partaga o'tiramiz,",
+          "Quloq solib ustozga!"
+        ]
+      },
+      {
+        id: 5,
+        title: "Zumrad va Qimmat Ertak Taronasi",
+        category: "ertak",
+        grade: "3-4 Sinf",
+        author: "Milliy Ertak Taronasi",
+        image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80",
+        notes: [293.66, 349.23, 440.00, 392.00, 349.23, 293.66],
+        lyrics: [
+          "Ertaklar - yaxshilikka chorlar,",
+          "Donolik sirlarin ochar.",
+          "Hamma bolalar tinglar,",
+          "Ezgu orzular sochar!"
+        ]
+      },
+      {
+        id: 6,
+        title: "Opa-Singillar Ahil-Inoq",
+        category: "ona",
+        grade: "2-3 Sinf",
+        author: "Bolalar Kuyi",
+        image: "https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=600&q=80",
+        notes: [349.23, 392.00, 440.00, 349.23, 329.63],
+        lyrics: [
+          "Uyimizda bayram bugun,",
+          "Oila jamdir har kecha.",
+          "Shirin so'zlar aytamiz,",
+          "Qo'shiq kuylab tungacha!"
+        ]
+      },
+      {
+        id: 7,
+        title: "Yashil Archa - Yangi Yil",
+        category: "tabiat",
+        grade: "1-4 Sinf",
+        author: "Bolalar Taronasi",
+        image: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=600&q=80",
+        notes: [261.63, 349.23, 349.23, 392.00, 349.23, 329.63],
+        lyrics: [
+          "Yashil archa atroflab,",
+          "Aylanar o'quvchilar.",
+          "Qorbobo va Qorqiz bilan,",
+          "Raqsga tushar bolalar!"
+        ]
+      },
+      {
+        id: 8,
+        title: "Sinfdoshim - Qadrdonim",
+        category: "maktab",
+        grade: "4 Sinf",
+        author: "Ustozlar va O'quvchilar",
+        image: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=600&q=80",
+        notes: [392.00, 349.23, 329.63, 293.66, 261.63],
+        lyrics: [
+          "Birgalikda o'qiymiz,",
+          "Bilim bilan o'samiz.",
+          "Biz bo'lajak olimlar,",
+          "Yuksak marra ko'zlaymiz!"
+        ]
+      }
+    ];
+
+    // Quiz Questions Data
+    const quizQuestions = [
+      {
+        q: "O'zbekiston Respublikasi Davlat Madhiyasi muallifi kim?",
+        a: ["Abdulla Oripov", "Erkin Vohidov", "Pulat Mo'min"],
+        correct: 0
+      },
+      {
+        q: "Qaysi faslda tabiat uyg'onadi va gullar ochiladi?",
+        a: ["Qish", "Bahor", "Kuz"],
+        correct: 1
+      },
+      {
+        q: "Pianino pultida necha xil asosiy oq notalar joylashgan?",
+        a: ["5 ta", "7 ta", "10 ta"],
+        correct: 1
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // STATE MANAGEMENT
+    // -------------------------------------------------------------
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let favorites = [];
+    let showFavoritesOnly = false;
+    let currentSong = null;
+    let isPlaying = false;
+    let audioCtx = null;
+    let melodyInterval = null;
+    let currentNoteIdx = 0;
+    let quizScore = 0;
+    let currentQuizIdx = 0;
+
+    // Initialize Page
+    window.onload = function() {
+      // Load saved favorites
+      const savedFavs = localStorage.getItem('zukko_favs');
+      if (savedFavs) {
+        try { favorites = JSON.parse(savedFavs); } catch(e){}
+      }
+      updateFavBadge();
+      renderCategoryTabs();
+      renderSongs();
+    };
+
+    // -------------------------------------------------------------
+    // RENDER FUNCTIONS
+    // -------------------------------------------------------------
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = categories.map(cat => {
+        const isActive = currentCategory === cat.id;
+        return `
+          <button onclick="filterCategory('${cat.id}')" 
+                  class="flex items-center gap-2 px-4 py-2 rounded-2xl font-bold transition whitespace-nowrap ${
+                    isActive 
+                    ? 'bg-rose-500 text-white shadow-md scale-105' 
+                    : 'bg-white/80 hover:bg-white text-slate-700 border border-slate-200'
+                  }">
+            <i class="fa-solid ${cat.icon}"></i>
+            <span>${cat.title}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderSongs() {
+      const grid = document.getElementById('songsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const sortBy = document.getElementById('sortBy').value;
+
+      let filtered = songs.filter(song => {
+        const matchesCategory = (currentCategory === 'all') || (song.category === currentCategory);
+        const matchesSearch = song.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              song.author.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesFav = !showFavoritesOnly || favorites.includes(song.id);
+        return matchesCategory && matchesSearch && matchesFav;
+      });
+
+      // Sorting
+      if (sortBy === 'title') {
+        filtered.sort((a,b) => a.title.localeCompare(b.title));
+      } else if (sortBy === 'grade') {
+        filtered.sort((a,b) => a.grade.localeCompare(b.grade));
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(song => {
+        const isFav = favorites.includes(song.id);
+        const catObj = categories.find(c => c.id === song.category) || categories[1];
+
+        return `
+          <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 border-2 border-slate-100 flex flex-col group relative">
+            
+            <!-- Thumbnail Image -->
+            <div class="relative h-44 overflow-hidden bg-slate-100">
+              <img src="${song.image}" alt="${song.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/600x400/f43f5e/ffffff?text=Zukko+Soz'">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              <!-- Category Badge -->
+              <span class="absolute top-3 left-3 ${catObj.color} text-white font-bold text-xs px-3 py-1 rounded-full shadow">
+                <i class="fa-solid ${catObj.icon} mr-1"></i> ${catObj.title}
+              </span>
+
+              <!-- Favorite Button -->
+              <button onclick="toggleFavorite(${song.id}, event)" class="absolute top-3 right-3 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-rose-500 hover:bg-white transition shadow">
+                <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart text-base"></i>
+              </button>
+
+              <!-- Play Button overlay -->
+              <button onclick="selectAndPlaySong(${song.id})" class="absolute bottom-3 right-3 w-12 h-12 bg-amber-400 hover:bg-amber-300 text-amber-950 rounded-2xl flex items-center justify-center text-xl shadow-lg transform hover:scale-110 transition">
+                <i class="fa-solid fa-play ml-1"></i>
+              </button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-4 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${song.grade}</span>
+                <h4 class="font-fredoka text-lg font-bold text-slate-800 line-clamp-1 group-hover:text-rose-500 transition">${song.title}</h4>
+                <p class="text-xs text-slate-500 font-medium mb-3">${song.author}</p>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-bold">
+                <span onclick="openKaraokeForSong(${song.id})" class="text-rose-500 hover:underline cursor-pointer flex items-center gap-1">
+                  <i class="fa-solid fa-microphone"></i> Matn va Karaoke
+                </span>
+                <span class="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-volume-high mr-1"></i> Jonli Kuy</span>
+              </div>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -------------------------------------------------------------
+    // CONTROLS & EVENT HANDLERS
+    // -------------------------------------------------------------
+    function filterCategory(catId) {
+      currentCategory = catId;
+      showFavoritesOnly = false;
+      document.getElementById('favToggleBtn').classList.remove('bg-rose-500', 'text-white');
+      
+      const catObj = categories.find(c => c.id === catId);
+      if (catObj) {
+        document.getElementById('categoryTitle').innerText = catObj.title;
+        document.getElementById('categoryDesc').innerText = catObj.desc;
+        const iconContainer = document.getElementById('categoryIcon');
+        iconContainer.className = `w-10 h-10 rounded-xl ${catObj.color} text-white flex items-center justify-center text-xl font-bold shadow`;
+        iconContainer.innerHTML = `<i class="fa-solid ${catObj.icon}"></i>`;
+      }
+
+      renderCategoryTabs();
+      renderSongs();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('searchInput').value;
+      renderSongs();
+    }
+
+    function resetFilters() {
+      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      currentCategory = 'all';
+      showFavoritesOnly = false;
+      renderCategoryTabs();
+      renderSongs();
+    }
+
+    function toggleFavorite(id, event) {
+      if (event) event.stopPropagation();
+      const idx = favorites.indexOf(id);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+      } else {
+        favorites.push(id);
+      }
+      localStorage.setItem('zukko_favs', JSON.stringify(favorites));
+      updateFavBadge();
+      renderSongs();
+    }
+
+    function updateFavBadge() {
+      document.getElementById('favCount').innerText = favorites.length;
+    }
+
+    function toggleFavoritesOnly() {
+      showFavoritesOnly = !showFavoritesOnly;
+      const btn = document.getElementById('favToggleBtn');
+      if (showFavoritesOnly) {
+        btn.classList.add('bg-rose-500', 'text-white');
+      } else {
+        btn.classList.remove('bg-rose-500', 'text-white');
+      }
+      renderSongs();
+    }
+
+    // -------------------------------------------------------------
+    // SYNTHESIZED WEB AUDIO PLAYER (No external audio needed)
+    // -------------------------------------------------------------
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playTone(freq, duration = 400) {
+      try {
+        initAudioContext();
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle'; // Warm melodic tone
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + (duration / 1000));
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + (duration / 1000));
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function playNote(freq) {
+      playTone(freq, 500);
+    }
+
+    function selectAndPlaySong(id) {
+      currentSong = songs.find(s => s.id === id);
+      if (!currentSong) return;
+
+      isPlaying = true;
+      currentNoteIdx = 0;
+      
+      // Update UI
+      const bottomPlayer = document.getElementById('bottomPlayerBar');
+      bottomPlayer.classList.remove('translate-y-full');
+
+      document.getElementById('playerTitle').innerText = currentSong.title;
+      document.getElementById('playerThumb').src = currentSong.image;
+      document.getElementById('playerCategory').innerText = currentSong.grade;
+
+      updatePlayButtonsState();
+      startMelodyLoop();
+    }
+
+    function startMelodyLoop() {
+      clearInterval(melodyInterval);
+      if (!currentSong || !currentSong.notes) return;
+
+      const lyricLines = currentSong.lyrics || [];
+      renderModalLyrics();
+
+      melodyInterval = setInterval(() => {
+        if (!isPlaying) return;
+
+        const freq = currentSong.notes[currentNoteIdx % currentSong.notes.length];
+        playTone(freq, 450);
+
+        // Update Lyric Karaoke Highlight
+        const lyricIdx = Math.floor(currentNoteIdx / 2) % lyricLines.length;
+        highlightKaraokeLine(lyricIdx);
+
+        // Update dummy progress bar
+        currentNoteIdx++;
+        const progress = (currentNoteIdx % 20) * 5;
+        document.getElementById('progressBar').value = progress;
+        document.getElementById('currentTimeDisplay').innerText = `0:${currentNoteIdx < 10 ? '0' : ''}${currentNoteIdx % 60}`;
+        document.getElementById('totalTimeDisplay').innerText = `0:45`;
+
+      }, 600);
+    }
+
+    function togglePlayPause() {
+      if (!currentSong) {
+        selectAndPlaySong(songs[0].id);
+        return;
+      }
+      isPlaying = !isPlaying;
+      if (!isPlaying) {
+        clearInterval(melodyInterval);
+      } else {
+        startMelodyLoop();
+      }
+      updatePlayButtonsState();
+    }
+
+    function updatePlayButtonsState() {
+      const iconClass = isPlaying ? 'fa-pause' : 'fa-play';
+      document.getElementById('mainPlayBtn').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+      document.getElementById('modalPlayBtn').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+    }
+
+    function playNextSong() {
+      if (!currentSong) return;
+      const nextIdx = (songs.findIndex(s => s.id === currentSong.id) + 1) % songs.length;
+      selectAndPlaySong(songs[nextIdx].id);
+    }
+
+    function playPrevSong() {
+      if (!currentSong) return;
+      let prevIdx = (songs.findIndex(s => s.id === currentSong.id) - 1);
+      if (prevIdx < 0) prevIdx = songs.length - 1;
+      selectAndPlaySong(songs[prevIdx].id);
+    }
+
+    function playRandomSong() {
+      const randIdx = Math.floor(Math.random() * songs.length);
+      selectAndPlaySong(songs[randIdx].id);
+      openKaraokeModal();
+    }
+
+    function closeBottomPlayer() {
+      isPlaying = false;
+      clearInterval(melodyInterval);
+      document.getElementById('bottomPlayerBar').classList.add('translate-y-full');
+    }
+
+    function seekAudio(val) {
+      currentNoteIdx = Math.floor((val / 100) * 20);
+    }
+
+    // -------------------------------------------------------------
+    // MODALS LOGIC
+    // -------------------------------------------------------------
+    function openKaraokeModal() {
+      if (!currentSong) {
+        selectAndPlaySong(songs[0].id);
+      }
+      
+      const modal = document.getElementById('karaokeModal');
+      document.getElementById('modalSongTitle').innerText = currentSong.title;
+      document.getElementById('modalSongAuthor').innerText = currentSong.author;
+      document.getElementById('modalSongThumb').src = currentSong.image;
+      document.getElementById('modalSongGrade').innerText = currentSong.grade;
+
+      const catObj = categories.find(c => c.id === currentSong.category) || categories[1];
+      document.getElementById('modalSongCat').innerText = catObj.title;
+
+      renderModalLyrics();
+
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function openKaraokeForSong(id) {
+      selectAndPlaySong(id);
+      openKaraokeModal();
+    }
+
+    function closeKaraokeModal() {
+      document.getElementById('karaokeModal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function renderModalLyrics() {
+      const lyricsContainer = document.getElementById('lyricsContainer');
+      if (!currentSong || !currentSong.lyrics) return;
+
+      lyricsContainer.innerHTML = currentSong.lyrics.map((line, idx) => `
+        <p id="lyric-line-${idx}" class="p-2 rounded-xl transition duration-300 cursor-pointer hover:bg-amber-100" onclick="highlightKaraokeLine(${idx})">
+          ${line}
+        </p>
+      `).join('');
+    }
+
+    function highlightKaraokeLine(activeIdx) {
+      if (!currentSong || !currentSong.lyrics) return;
+      currentSong.lyrics.forEach((_, idx) => {
+        const lineElem = document.getElementById(`lyric-line-${idx}`);
+        if (lineElem) {
+          if (idx === activeIdx) {
+            lineElem.className = "p-2 rounded-xl karaoke-active bg-amber-200/80";
+            lineElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            lineElem.className = "p-2 rounded-xl text-slate-600 font-semibold";
+          }
+        }
+      });
+    }
+
+    // Piano Modal Controls
+    function openPianoModal() {
+      document.getElementById('pianoModal').classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closePianoModal() {
+      document.getElementById('pianoModal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    // Quiz Modal Controls
+    function openQuizModal() {
+      currentQuizIdx = 0;
+      quizScore = 0;
+      renderQuizQuestion();
+      document.getElementById('quizModal').classList.remove('opacity-0', 'pointer-events-none');
+    }
+    function closeQuizModal() {
+      document.getElementById('quizModal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function renderQuizQuestion() {
+      const q = quizQuestions[currentQuizIdx];
+      document.getElementById('quizScore').innerText = `Ball: ${quizScore}`;
+      if (!q) {
+        document.getElementById('quizQuestion').innerText = "Barakalla! Barcha savollarga javob berdingiz! 🎉";
+        document.getElementById('quizAnswers').innerHTML = `
+          <button onclick="openQuizModal()" class="w-full bg-emerald-500 text-white font-bold py-3 rounded-xl hover:bg-emerald-600 transition">
+            Qaytadan o'ynash
+          </button>
+        `;
+        return;
+      }
+
+      document.getElementById('quizQuestion').innerText = `${currentQuizIdx + 1}. ${q.q}`;
+      document.getElementById('quizAnswers').innerHTML = q.a.map((opt, idx) => `
+        <button onclick="checkQuizAnswer(${idx})" class="w-full text-left p-3 rounded-xl bg-white border border-slate-200 font-semibold hover:bg-purple-50 hover:border-purple-300 transition text-slate-700">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function checkQuizAnswer(selectedIdx) {
+      const q = quizQuestions[currentQuizIdx];
+      if (selectedIdx === q.correct) {
+        quizScore += 10;
+        playTone(523.25, 200); // High pitch success note
+      } else {
+        playTone(200, 300); // Low note
+      }
+      currentQuizIdx++;
+      renderQuizQuestion();
+    }
+
+    // Keyboard support for Piano
+    window.addEventListener('keydown', (e) => {
+      const keyMap = {
+        'a': 261.63, // C
+        's': 293.66, // D
+        'd': 329.63, // E
+        'f': 349.23, // F
+        'g': 392.00, // G
+        'h': 440.00, // A
+        'j': 493.88, // B
+        'k': 523.25  // C2
+      };
+      if (keyMap[e.key.toLowerCase()]) {
+        playNote(keyMap[e.key.toLowerCase()]);
+      }
+    });
+  </script>
+</body>
+</html>

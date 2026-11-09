@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="uz" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musiqa Dunyosi — 1-4 Sinf uchun Oʻzbek Milliy Cholgʻulari</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kidsYellow: '#FFDE59',
+                        kidsOrange: '#FF914D',
+                        kidsBlue: '#5271FF',
+                        kidsGreen: '#00C49F',
+                        kidsPurple: '#8C52FF',
+                        kidsPink: '#FF66C4'
+                    },
+                    fontFamily: {
+                        sans: ['Comic Neue', 'Fredoka', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', 'Comic Neue', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            color: #1e293b;
+        }
+
+        .kids-card {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .kids-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .kids-card.playing {
+            animation: pulseBounce 0.6s infinite alternate ease-in-out;
+            border-color: #FF914D !important;
+            box-shadow: 0 0 30px rgba(255, 145, 77, 0.6) !important;
+        }
+
+        @keyframes pulseBounce {
+            0% { transform: scale(1.02) rotate(-1deg); }
+            100% { transform: scale(1.06) rotate(1deg); }
+        }
+
+        .bar {
+            transition: height 0.15s ease;
+        }
+
+        .filter-btn-active {
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-kidsYellow">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-4 border-kidsYellow px-4 lg:px-8 py-3 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-kidsOrange to-kidsYellow flex items-center justify-center text-white text-2xl shadow-lg transform rotate-3 hover:rotate-12 transition-transform">
+                    🎵
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800 tracking-wide">
+                        Musiqa Dunyosi 🎼
+                    </h1>
+                    <p class="text-xs md:text-sm font-bold text-kidsPurple">1-4 sinf oʻquvchilari uchun interaktiv milliy cholgʻular</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-2xl border-2 border-slate-200 shadow-inner">
+                    <span class="text-xl">🔊</span>
+                    <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.8" class="w-24 accent-kidsOrange cursor-pointer">
+                </div>
+
+                <button id="stopAllBtn" class="px-4 py-2 text-sm font-bold text-white bg-rose-500 hover:bg-rose-600 rounded-2xl shadow-md active:scale-95 transition-all flex items-center space-x-1">
+                    <span>🛑 Toʻxtatish</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6 flex-grow w-full">
+        
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+            <button data-filter="all" class="filter-btn filter-btn-active px-6 py-3 rounded-2xl font-bold text-base transition-all bg-kidsYellow text-slate-900 border-2 border-amber-400">
+                🌈 Hammasi
+            </button>
+            <button data-filter="string" class="filter-btn px-6 py-3 rounded-2xl font-bold text-base transition-all bg-white text-slate-700 border-2 border-slate-200 hover:border-kidsBlue">
+                🪕 Torli cholgʻular
+            </button>
+            <button data-filter="wind" class="filter-btn px-6 py-3 rounded-2xl font-bold text-base transition-all bg-white text-slate-700 border-2 border-slate-200 hover:border-kidsGreen">
+                🎺 Puflama cholgʻular
+            </button>
+            <button data-filter="percussion" class="filter-btn px-6 py-3 rounded-2xl font-bold text-base transition-all bg-white text-slate-700 border-2 border-slate-200 hover:border-kidsPink">
+                🥁 Zarbli cholgʻular
+            </button>
+            <a href="index.html" style="
+                background-color: #4f46e5;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 20px;
+                text-decoration: none;
+                font-weight: bold;
+                display: inline-block;">
+                🏠 Bosh sahifaga o'tish
+            </a>
+        </div>
+
+        <!-- Kids Audio Visualizer Banner -->
+        <div class="mb-8 p-4 bg-white/80 rounded-3xl border-4 border-kidsPurple/30 shadow-lg flex flex-col items-center justify-center relative overflow-hidden">
+            <div class="text-base md:text-lg font-bold text-kidsPurple mb-2 flex items-center space-x-2">
+                <span class="animate-bounce text-xl">🎶</span>
+                <span id="nowPlayingText">Tinglash uchun biror cholgʻu asbobini bosing!</span>
+            </div>
+            <div id="visualizer" class="flex items-end justify-center gap-2 h-14 w-full max-w-md px-4">
+            </div>
+        </div>
+
+        <!-- Instrument Cards Grid -->
+        <div id="instrumentsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-slate-200 bg-white/60 backdrop-blur-sm py-4 text-center text-slate-600 font-bold text-sm">
+        <p>✨ Boshlangʻich sinf oʻquvchilari uchun Oʻzbek Milliy Musiqa Cholgʻulari platformasi</p>
+    </footer>
+
+    <!-- JavaScript Engine -->
+    <script>
+        const instrumentsData = [
+            {
+                id: 'rubob',
+                file: 'RUBOB.mp3',
+                name: 'Rubob',
+                category: 'string',
+                categoryLabel: '🪕 Torli cholgʻu',
+                badgeBg: 'bg-amber-100 text-amber-800 border-amber-300',
+                desc: 'Rubob — mizrob (tayoqcha) bilan chalinadigan torli cholgʻu. U juda quvnoq va shoʻx navolar bagʻishlaydi!',
+                img: 'RUBOB.jpg',
+                synthType: 'plucked',
+                freq: 329.63
+            },
+            {
+                id: 'dutor',
+                file: 'DUTOR.mp3',
+                name: 'Dutor',
+                category: 'string',
+                categoryLabel: '🪕 Torli cholgʻu',
+                badgeBg: 'bg-amber-100 text-amber-800 border-amber-300',
+                desc: 'Dutor — ikkita yumshoq tori bor cholgʻu. Uning ovozi juda mayin va tinchlantiruvchi eshitiladi.',
+                img: 'DUTOR.jpg',
+                synthType: 'dutor',
+                freq: 293.66
+            },
+            {
+                id: 'nay',
+                file: 'NAY.mp3',
+                name: 'Nay',
+                category: 'wind',
+                categoryLabel: '🎺 Puflama cholgʻu',
+                badgeBg: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+                desc: 'Nay — qamishdan yasaladigan puflama cholgʻu. Ichiga havo puflanganda yoqimli va navodor ovoz beradi.',
+                img: 'NAY.jpg',
+                synthType: 'flute',
+                freq: 587.33
+            },
+            {
+                id: 'karnay',
+                file: 'KARNAY.mp3',
+                name: 'Karnay',
+                category: 'wind',
+                categoryLabel: '🎺 Puflama cholgʻu',
+                badgeBg: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+                desc: 'Karnay — juda baland va kuchli ovozli uzun cholgʻu. U toʻy va bayramlarda chorlov uchun chalinadi!',
+                img: 'KARNAY.jpg',
+                synthType: 'brass',
+                freq: 220.00
+            },
+            {
+                id: 'nagora',
+                file: 'NAG`ORA.mp3',
+                name: 'Nagʻora / Doyra',
+                category: 'percussion',
+                categoryLabel: '🥁 Zarbli cholgʻu',
+                badgeBg: 'bg-pink-100 text-pink-800 border-pink-300',
+                desc: 'Nagʻora va Doyra — zarb beringanda ritm hosil qiluvchi cholgʻular. Ular hammani raqsga tushiradi!',
+                img: 'DOYRA.jpg',
+                synthType: 'percussion',
+                freq: 120.00
+            },
+            {
+                id: 'qoshnay',
+                file: 'QO`SHNAY.mp3',
+                name: 'Qoʻshnay',
+                category: 'wind',
+                categoryLabel: '🎺 Puflama cholgʻu',
+                badgeBg: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+                desc: 'Qoʻshnay — ikkita nayning birga qoʻshilgani. U oʻziga xos va juda qiziqarli ovoz chiqaradi.',
+                img: 'QO`SHNAY.jpg',
+                synthType: 'flute',
+                freq: 659.25
+            },
+            {
+                id: 'qobiz',
+                file: 'QOBIZ.mp3',
+                name: 'Qobiz',
+                category: 'string',
+                categoryLabel: '🪕 Kamonli cholgʻu',
+                badgeBg: 'bg-purple-100 text-purple-800 border-purple-300',
+                desc: 'Qobiz — kamoncha orqali chalinadigan eng qadimiy cholgʻulardan biri. U sehrli va chuqur eshitiladi.',
+                img: 'QOBIZ.jpg',
+                synthType: 'qobiz',
+                freq: 196.00
+            },
+            {
+                id: 'qonun',
+                file: 'QONUN 1.mp3',
+                name: 'Qonun',
+                category: 'string',
+                categoryLabel: '🪕 Torli cholgʻu',
+                badgeBg: 'bg-amber-100 text-amber-800 border-amber-300',
+                desc: 'Qonun — koʻplab torlarga ega boʻlgan cholgʻu. Barmoqlarga uzuk taqib chalinar ekan, jarangdor ovoz beradi.',
+                img: 'QONUN.jpg',
+                synthType: 'kanun',
+                freq: 523.25
+            },
+            {
+                id: 'sato',
+                file: 'SATO.mp3',
+                name: 'Sato',
+                category: 'string',
+                categoryLabel: '🪕 Kamonli cholgʻu',
+                badgeBg: 'bg-purple-100 text-purple-800 border-purple-300',
+                desc: 'Sato — dastalari uzun boʻlgan kamonli cholgʻu. Uning ovozi xuddi inson ashula aytayotgandek mayin kuylaydi.',
+                img: 'SATO.jpg',
+                synthType: 'bowed',
+                freq: 440.00
+            },
+            {
+                id: 'chang',
+                file: 'CHANG.mp3',
+                name: 'Chang',
+                category: 'string',
+                categoryLabel: '🪕 Zarbli-torli cholgʻu',
+                badgeBg: 'bg-amber-100 text-amber-800 border-amber-300',
+                desc: 'Chang — torlariga maxsus bambuk tayoqchalar urib chalinadi. Juda shoʻx va jiringlagan tovush taratadi!',
+                img: 'CHANG.jpg',
+                synthType: 'chang',
+                freq: 415.30
+            }
+        ];
+
+        let audioCtx = null;
+        let activeNodes = {};
+        let currentPlayingId = null;
+        let masterGain = null;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+                masterGain = audioCtx.createGain();
+                masterGain.gain.value = parseFloat(document.getElementById('masterVolume').value);
+                masterGain.connect(audioCtx.destination);
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(instrument) {
+            initAudioContext();
+            stopAllSounds();
+
+            const audioElement = document.getElementById(`audio-${instrument.id}`);
+            
+            if (audioElement) {
+                const playPromise = audioElement.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        setCardPlayingState(instrument.id, instrument.name, true);
+                        audioElement.onended = () => setCardPlayingState(instrument.id, instrument.name, false);
+                    }).catch(() => {
+                        runWebAudioSynth(instrument);
+                    });
+                } else {
+                    runWebAudioSynth(instrument);
+                }
+            } else {
+                runWebAudioSynth(instrument);
+            }
+        }
+
+        function runWebAudioSynth(instrument) {
+            const now = audioCtx.currentTime;
+            const duration = 2.0;
+
+            const gainNode = audioCtx.createGain();
+            gainNode.connect(masterGain);
+            let osc1 = audioCtx.createOscillator();
+
+            if (instrument.synthType === 'flute') {
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(instrument.freq, now);
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(0.5, now + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            } else if (instrument.synthType === 'brass') {
+                osc1.type = 'sawtooth';
+                osc1.frequency.setValueAtTime(instrument.freq, now);
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(0.6, now + 0.05);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+            } else if (instrument.synthType === 'percussion') {
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(130, now);
+                osc1.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+                gainNode.gain.setValueAtTime(0.8, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+            } else {
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(instrument.freq, now);
+                gainNode.gain.setValueAtTime(0.7, now);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+            }
+
+            osc1.connect(gainNode);
+            osc1.start(now);
+            osc1.stop(now + duration);
+
+            activeNodes[instrument.id] = gainNode;
+            setCardPlayingState(instrument.id, instrument.name, true);
+
+            setTimeout(() => {
+                setCardPlayingState(instrument.id, instrument.name, false);
+            }, duration * 1000);
+        }
+
+        function stopAllSounds() {
+            Object.keys(activeNodes).forEach(id => {
+                try { activeNodes[id].disconnect(); } catch(e){}
+            });
+            activeNodes = {};
+
+            document.querySelectorAll('audio').forEach(a => {
+                a.pause();
+                a.currentTime = 0;
+            });
+
+            currentPlayingId = null;
+            document.querySelectorAll('.kids-card').forEach(card => card.classList.remove('playing'));
+            document.getElementById('nowPlayingText').innerText = "Tinglash uchun biror cholgʻu asbobini bosing!";
+            stopVisualizerAnimation();
+        }
+
+        const visualizerContainer = document.getElementById('visualizer');
+        const numBars = 16;
+        let visualizerInterval = null;
+
+        visualizerContainer.innerHTML = '';
+        for (let i = 0; i < numBars; i++) {
+            const bar = document.createElement('div');
+            bar.className = 'bar w-2 bg-gradient-to-t from-kidsPurple via-kidsPink to-kidsYellow rounded-full h-2';
+            visualizerContainer.appendChild(bar);
+        }
+
+        function startVisualizerAnimation() {
+            stopVisualizerAnimation();
+            const bars = visualizerContainer.querySelectorAll('.bar');
+            visualizerInterval = setInterval(() => {
+                bars.forEach(bar => {
+                    const randomHeight = Math.floor(Math.random() * 45) + 6;
+                    bar.style.height = `${randomHeight}px`;
+                });
+            }, 90);
+        }
+
+        function stopVisualizerAnimation() {
+            if (visualizerInterval) clearInterval(visualizerInterval);
+            const bars = visualizerContainer.querySelectorAll('.bar');
+            bars.forEach(bar => bar.style.height = '6px');
+        }
+
+        function setCardPlayingState(id, name, isPlaying) {
+            const card = document.getElementById(`card-${id}`);
+            const nowText = document.getElementById('nowPlayingText');
+
+            if (isPlaying) {
+                document.querySelectorAll('.kids-card').forEach(c => c.classList.remove('playing'));
+                if (card) card.classList.add('playing');
+                nowText.innerText = `🎵 JARANGLAMOQDA: ${name.toUpperCase()}! 🎶`;
+                currentPlayingId = id;
+                startVisualizerAnimation();
+            } else {
+                if (currentPlayingId === id) {
+                    if (card) card.classList.remove('playing');
+                    nowText.innerText = "Tinglash uchun biror cholgʻu asbobini bosing!";
+                    currentPlayingId = null;
+                    stopVisualizerAnimation();
+                }
+            }
+        }
+
+        function renderCards(filter = 'all') {
+            const grid = document.getElementById('instrumentsGrid');
+            grid.innerHTML = '';
+
+            const filteredData = filter === 'all' 
+                ? instrumentsData 
+                : instrumentsData.filter(item => item.category === filter);
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.id = `card-${item.id}`;
+                card.className = `kids-card bg-white rounded-3xl border-4 border-slate-100 overflow-hidden flex flex-col justify-between cursor-pointer relative shadow-sm hover:border-kidsYellow transition-all`;
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="relative w-full h-52 overflow-hidden bg-slate-100">
+                            <img src="${item.img}" 
+                                 alt="${item.name}" 
+                                 loading="lazy" 
+                                 onerror="this.src='https://placehold.co/600x400/FFDE59/1e293b?text=${encodeURIComponent(item.name)}'"
+                                 class="w-full h-full object-cover transition-transform duration-500">
+                            
+                            <span class="absolute top-3 left-3 text-xs font-bold px-3 py-1.5 rounded-full border ${item.badgeBg} shadow-sm backdrop-blur-md">
+                                ${item.categoryLabel}
+                            </span>
+                        </div>
+
+                        <div class="p-5">
+                            <h3 class="text-2xl font-extrabold text-slate-800 mb-2 flex items-center justify-between">
+                                <span>${item.name}</span>
+                                <span class="text-2xl">🔊</span>
+                            </h3>
+                            <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                                ${item.desc}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="p-5 pt-0">
+                        <button class="w-full py-3.5 px-4 bg-gradient-to-r from-kidsYellow via-kidsOrange to-kidsPink text-white font-extrabold rounded-2xl text-base shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center space-x-2">
+                            <span class="text-xl">▶️</span>
+                            <span>OVOZINI TINGLASH</span>
+                        </button>
+
+                        <audio id="audio-${item.id}" preload="none">
+                            <source src="${item.file}" type="audio/mpeg">
+                        </audio>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => {
+                    playSound(item);
+                });
+
+                grid.appendChild(card);
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('filter-btn-active', 'bg-kidsYellow', 'text-slate-900', 'border-amber-400');
+                    b.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
+                });
+
+                const target = e.currentTarget;
+                target.classList.add('filter-btn-active', 'bg-kidsYellow', 'text-slate-900', 'border-amber-400');
+                target.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+                
+                renderCards(target.dataset.filter);
+            });
+        });
+
+        document.getElementById('masterVolume').addEventListener('input', (e) => {
+            if (masterGain) {
+                masterGain.gain.value = parseFloat(e.target.value);
+            }
+        });
+
+        document.getElementById('stopAllBtn').addEventListener('click', () => {
+            stopAllSounds();
+        });
+
+        window.addEventListener('load', () => {
+            renderCards('all');
+        });
+    </script>
+</body>
+</html>

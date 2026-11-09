@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zukko So'z - Musiqiy Viktorina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap');
+        body { font-family: 'Fredoka', cursive, sans-serif; background-color: #f0fdf4; }
+        .option-btn { transition: all 0.2s ease; }
+        .option-btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- HEADER VA ORQAGA QAYTISH TUGMASI -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-indigo-100 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl font-bold text-sm transition">
+                <i class="fa-solid fa-arrow-left"></i> Asosiy Sahifaga Qaytish
+            </a>
+            <div class="flex items-center gap-4">
+                <div class="bg-amber-100 text-amber-800 px-4 py-1.5 rounded-full font-bold text-sm shadow-inner">
+                    ⭐ Jami Ball: <span id="score-display">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto px-4 pt-8 text-center">
+        <h2 class="text-3xl font-bold text-indigo-700 mb-2">🧠 Musiqiy Viktorina</h2>
+        <p class="text-slate-500 mb-6">Bilimingizni sinab ko'ring! To'g'ri javob: <span class="text-emerald-600 font-bold">+5 ball</span>, Xato: <span class="text-rose-600 font-bold">-2 ball</span></p>
+
+        <!-- REJIM TANLASH TUGMALARI -->
+        <div class="flex justify-center gap-4 mb-8" id="mode-select">
+            <button onclick="startQuiz('image')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition flex items-center gap-2">
+                🖼️ Rasmlar orqali topish
+            </button>
+            <button onclick="startQuiz('sound')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition flex items-center gap-2">
+                🔊 Tovushlar orqali topish
+            </button>
+        </div>
+
+        <!-- O'YIN MAYDONI (CARD) -->
+        <div id="quiz-card" class="bg-white p-8 rounded-3xl shadow-xl border-4 border-indigo-100 hidden">
+            <div class="flex justify-between items-center mb-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <span id="quiz-mode-title">Rejim</span>
+                <span id="question-counter">1 / 5</span>
+            </div>
+
+            <!-- Savol Vizuali (Rasm yoki Ovoz tugmasi) -->
+            <div id="question-visual" class="mb-6 flex justify-center items-center">
+                <!-- Dinamik chiqadi -->
+            </div>
+
+            <h3 id="question-text" class="text-xl font-bold text-slate-800 mb-6">Bu qaysi cholg'u asbobi?</h3>
+
+            <!-- Variantlar Grid -->
+            <div class="grid grid-cols-2 gap-4" id="options-container">
+                <!-- Variantlar -->
+            </div>
+
+            <div id="feedback-msg" class="mt-6 font-bold text-lg hidden"></div>
+        </div>
+
+        <!-- NATIJA OYNASI -->
+        <div id="result-box" class="bg-white p-8 rounded-3xl shadow-xl border-4 border-emerald-100 hidden">
+            <div class="text-6xl mb-4">🏆</div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">Viktorina yakunlandi!</h3>
+            <p class="text-slate-500 mb-6">Siz to'plagan yakuniy ball:</p>
+            <div class="text-4xl font-extrabold text-indigo-600 mb-6" id="final-score">0 ball</div>
+            <button onclick="location.reload()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl shadow-lg transition">
+                🔄 Qaytadan O'ynash
+            </button>
+        </div>
+    </main>
+
+    <!-- JAVASCRIPT KODI -->
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(freq, type = 'triangle') {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.6);
+        }
+
+        const quizData = {
+            image: [
+                { q: "Bu qaysi cholg'u asbobi?", visual: "🎹", correct: "Pianino", options: ["Pianino", "Gitara", "Baraban", "Nay"] },
+                { q: "Quyidagilardan qaysi biri torli cholg'u?", visual: "🎸", correct: "Gitara", options: ["Baraban", "Gitara", "Nay", "Pianino"] },
+                { q: "Zarbli (ritm) cholg'u asbobini toping:", visual: "🥁", correct: "Baraban", options: ["Rubob", "Pianino", "Baraban", "Nay"] },
+                { q: "Milliy puflama cholg'u asbobi:", visual: "🪈", correct: "Nay", options: ["Gitara", "Nay", "Baraban", "Pianino"] },
+                { q: "Milliy torli cholg'u asbobimiz:", visual: "🪕", correct: "Rubob", options: ["Rubob", "Pianino", "Gitara", "Baraban"] }
+            ],
+            sound: [
+                { q: "Eshitilayotgan ovoz qaysi cholg'uda chalindi?", freq: 261.63, type: 'triangle', correct: "Pianino", options: ["Pianino", "Baraban", "Gitara", "Nay"] },
+                { q: "Ushbu jarangdor torli ovoz qaysi asbobga tegishli?", freq: 329.63, type: 'sawtooth', correct: "Gitara", options: ["Nay", "Gitara", "Pianino", "Rubob"] },
+                { q: "Bu zarbli (baraban) ovozi:", freq: 80, type: 'square', correct: "Baraban", options: ["Baraban", "Pianino", "Gitara", "Nay"] },
+                { q: "Nayning mayin tovushini toping:", freq: 440, type: 'sine', correct: "Nay", options: ["Gitara", "Baraban", "Nay", "Rubob"] },
+                { q: "Rubob pardasining ovozi:", freq: 293.66, type: 'triangle', correct: "Rubob", options: ["Rubob", "Pianino", "Nay", "Gitara"] }
+            ]
+        };
+
+        let currentMode = '';
+        let currentIndex = 0;
+        let score = 0;
+
+        function startQuiz(mode) {
+            currentMode = mode;
+            currentIndex = 0;
+            score = 0;
+            document.getElementById('score-display').innerText = score;
+            document.getElementById('mode-select').classList.add('hidden');
+            document.getElementById('quiz-card').classList.remove('hidden');
+            document.getElementById('result-box').classList.add('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const dataList = quizData[currentMode];
+            if (currentIndex >= dataList.length) {
+                showResult();
+                return;
+            }
+
+            const item = dataList[currentIndex];
+            document.getElementById('question-counter').innerText = `${currentIndex + 1} / ${dataList.length}`;
+            document.getElementById('quiz-mode-title').innerText = currentMode === 'image' ? '🖼️ Rasm Bo\'yicha' : '🔊 Ovoz Bo\'yicha';
+            document.getElementById('question-text').innerText = item.q;
+            document.getElementById('feedback-msg').classList.add('hidden');
+
+            const visualContainer = document.getElementById('question-visual');
+            if (currentMode === 'image') {
+                visualContainer.innerHTML = `<div class="w-28 h-28 rounded-3xl bg-indigo-50 flex items-center justify-center text-6xl shadow-inner border-2 border-indigo-100">${item.visual}</div>`;
+            } else {
+                visualContainer.innerHTML = `
+                    <button onclick="playSound(${item.freq}, '${item.type}')" class="w-28 h-28 rounded-3xl bg-purple-600 hover:bg-purple-700 text-white flex flex-col items-center justify-center text-4xl shadow-lg transition animate-pulse">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span class="text-xs font-bold mt-1">Tinglash</span>
+                    </button>
+                `;
+                // Avtomatik bir marta eshittirish
+                playSound(item.freq, item.type);
+            }
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Variantlarni aralashtirib chiqarish
+            const shuffledOptions = [...item.options].sort(() => Math.random() - 0.5);
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 font-bold py-4 px-6 rounded-2xl shadow border border-indigo-100 text-base transition";
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, item.correct);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, correct) {
+            const feedback = document.getElementById('feedback-msg');
+            feedback.classList.remove('hidden');
+
+            if (selected === correct) {
+                score += 5;
+                feedback.innerHTML = `<span class="text-emerald-600">✅ To'g'ri! (+5 ball)</span>`;
+            } else {
+                score -= 2;
+                feedback.innerHTML = `<span class="text-rose-600">❌ Xato! To'g'ri javob: "${correct}" (-2 ball)</span>`;
+            }
+            document.getElementById('score-display').innerText = score;
+
+            // 1 sekunddan keyin keyingi savolga o'tish
+            setTimeout(() => {
+                currentIndex++;
+                loadQuestion();
+            }, 1200);
+        }
+
+        function showResult() {
+            document.getElementById('quiz-card').classList.add('hidden');
+            document.getElementById('result-box').classList.remove('hidden');
+            document.getElementById('final-score').innerText = `${score} ball`;
+        }
+    </script>
+</body>
+</html>
